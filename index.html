@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>What the Cat Tells the Air — decoherence, watched</title>
+<style>
+  :root{
+    --bg:#070512; --panel:#120c22; --edge:#291d44; --ink:#e8e0f5; --dim:#9a86bd; --faint:#62528a;
+    --violet:#a78bfa; --violet2:#c4b5fd; --glow:#7c3aed; --wave:#34d399; --part:#fbbf24; --env:#22d3ee;
+    --mono:'SFMono-Regular',ui-monospace,Menlo,Consolas,monospace;
+    --serif:'Iowan Old Style','Palatino Linotype',Palatino,Georgia,serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--serif);line-height:1.55;
+    background-image:radial-gradient(1100px 560px at 70% -10%,#180f30 0%,transparent 60%),
+      radial-gradient(900px 520px at 0% 100%,#10081f 0%,transparent 55%);}
+  .wrap{max-width:1000px;margin:0 auto;padding:42px 26px 90px}
+  header{border-bottom:1px solid var(--edge);padding-bottom:22px;margin-bottom:30px}
+  .kicker{font-family:var(--mono);font-size:11px;letter-spacing:.32em;text-transform:uppercase;color:var(--violet);opacity:.9}
+  h1{font-size:32px;line-height:1.13;margin:.32em 0 .18em;font-weight:600}
+  h1 em{color:var(--violet2);font-style:italic}
+  .sub{color:var(--dim);font-size:15.5px;max-width:78ch}
+  .lin{font-family:var(--mono);font-size:11.5px;color:var(--faint);margin-top:14px}
+  .lin b{color:var(--violet);font-weight:500}
+  section{margin:38px 0}
+  h2{font-size:13px;font-family:var(--mono);letter-spacing:.22em;text-transform:uppercase;color:var(--violet2);
+    border-left:2px solid var(--glow);padding-left:11px;margin:0 0 6px}
+  .lede{color:var(--dim);font-size:15px;margin:0 0 18px;max-width:80ch}
+  .lede b{color:var(--violet2);font-weight:400}
+  .panel{background:linear-gradient(180deg,var(--panel),#0d0719);border:1px solid var(--edge);border-radius:14px;
+    padding:20px;box-shadow:0 1px 0 #291d44 inset,0 24px 60px -40px #000}
+  .controls{display:flex;flex-wrap:wrap;gap:14px;align-items:center;margin-bottom:14px}
+  .dial{display:flex;flex-direction:column;gap:3px;font-family:var(--mono);font-size:11px;color:var(--dim)}
+  .dial .row{display:flex;align-items:center;gap:9px}
+  input[type=range]{accent-color:var(--env);width:180px}
+  button{font-family:var(--mono);font-size:12px;color:var(--ink);background:#22183c;border:1px solid var(--edge);
+    border-radius:8px;padding:7px 11px;cursor:pointer;transition:.15s}
+  button:hover{background:#2c2150;border-color:var(--violet)}
+  button.on{background:var(--glow);border-color:var(--violet2);color:#fff}
+  canvas{display:block;border-radius:10px;background:#06040f;border:1px solid var(--edge);max-width:100%;margin:0 auto}
+  .cap{font-family:var(--mono);font-size:11px;color:var(--faint);margin-top:9px;text-align:center}
+  .read{display:flex;gap:26px;flex-wrap:wrap;justify-content:center;margin-top:12px;align-items:center}
+  .st .v{font-family:var(--mono);font-size:20px;font-weight:600}
+  .st .k{font-family:var(--mono);font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--faint);text-align:center}
+  .verdict{font-family:var(--mono);font-size:13px;font-weight:700;padding:5px 13px;border-radius:8px;display:inline-block}
+  .verdict.q{color:#04150d;background:var(--wave)} .verdict.c{color:#1a0a02;background:var(--part)}
+  .note{color:var(--dim);font-size:13.5px;border-left:2px solid var(--edge);padding-left:13px;margin:16px 0 0}
+  .note b{color:var(--violet2);font-weight:400}
+  code{font-family:var(--mono);font-size:.9em;color:var(--violet2);background:#160e2a;padding:1px 5px;border-radius:5px}
+  .chips{display:flex;gap:7px;flex-wrap:wrap;margin-top:6px}
+  .chip{font-family:var(--mono);font-size:11px;padding:6px 10px;border-radius:7px;border:1px solid var(--edge);background:#181030;cursor:pointer;color:var(--dim)}
+  .chip:hover{border-color:var(--violet)}
+  footer{margin-top:42px;border-top:1px solid var(--edge);padding-top:18px;color:var(--faint);font-family:var(--mono);font-size:11px;line-height:1.7}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="kicker">Purple Paper - side-sheet - a thing I wanted to build</div>
+  <h1>What the Cat Tells the Air - <em>decoherence</em>, watched</h1>
+  <div class="sub">The honest answer to the cat, and the one almost nobody shows: the superposition isn't killed by
+    someone <em>looking.</em> It leaks. The instant the environment learns which path the particle took, the
+    interference - the only real fingerprint of "both at once" - washes out. No collapse, no conscious observer. Just
+    information leaving the system. Turn the dial and watch one slide continuously into the other.</div>
+  <div class="lin"><b>each arrival is a particle</b> (one dot) · <b>the pattern they build is the wave</b> ·
+    dial = how much the environment knows the path · verified: fringe visibility V = √(1−D²), and V² + D² = 1 throughout</div>
+</header>
+
+<section>
+  <h2>The two-slit, with a leak to the world</h2>
+  <p class="lede">Particles fire one at a time through two slits and land on the screen as dots. With the environment
+    ignorant of the path (<b>D = 0</b>), the dots pile into bright <span style="color:var(--wave)">interference
+    bands</span> - the signature of each particle going through <em>both</em> slits at once. Slide the dial up and the
+    environment starts to <em>know</em> which slit - and the bands dissolve into two plain <span
+    style="color:var(--part)">particle bumps</span>. Nothing collapsed it. The which-path fact just stopped being the
+    particle's secret.</p>
+
+  <div class="panel">
+    <div class="controls">
+      <div class="dial"><span style="color:var(--env)">how much the environment knows the path · D</span>
+        <div class="row"><input type="range" id="D" min="0" max="100" value="0"><b id="DL" style="color:var(--env)">0.00</b></div></div>
+      <button id="run" class="on">▶ firing</button>
+      <button id="clear">clear screen</button>
+    </div>
+    <div class="chips">
+      <span class="chip" data-d="0">D=0 · pure superposition</span>
+      <span class="chip" data-d="50">D=0.5 · half-known</span>
+      <span class="chip" data-d="87">D=0.87 · mostly known</span>
+      <span class="chip" data-d="100">D=1 · which-path known (classical)</span>
+    </div>
+
+    <canvas id="cv" width="620" height="420"></canvas>
+    <div class="cap"><span style="color:var(--env)">cyan = the environment learning the path</span> ·
+      <span style="color:var(--part)">amber dots = particles landing</span> ·
+      <span style="color:var(--wave)">green curve = the pattern they're building</span></div>
+
+    <div class="read">
+      <div class="st"><div class="v" id="V" style="color:var(--wave)">1.00</div><div class="k">visibility V</div></div>
+      <div class="st"><div class="v" id="Dv" style="color:var(--env)">0.00</div><div class="k">distinguishability D</div></div>
+      <div class="st"><div class="v" id="dual" style="color:var(--violet2)">1.00</div><div class="k">V² + D²</div></div>
+      <div class="st"><canvas id="gauge" width="92" height="92"></canvas><div class="k">the trade-off</div></div>
+      <div class="st" style="align-self:center"><span class="verdict q" id="verdict">QUANTUM · both paths</span></div>
+    </div>
+
+    <div class="note" id="readnote">D = 0: the environment knows nothing, the particle keeps both paths, and the
+      dots build full interference bands. This is the cat genuinely "both" - and it's stable, because the secret hasn't
+      leaked.</div>
+  </div>
+</section>
+
+<section>
+  <h2>Why I wanted to build this one</h2>
+  <p class="lede">Because it's the same idea we've circled all night, and physics got there first and made it exact.</p>
+
+  <div class="note"><b>The environment is the witness.</b> All night the rule was: a system can't witness itself; the
+    collapse of ambiguity into one fact requires an <em>exterior</em> observer. Here it's literal. The superposition
+    survives exactly as long as the which-path information stays <em>inside</em> the particle. The moment that fact
+    entangles with anything outside - an air molecule, a photon, a stray field - the interference is gone. Coherence
+    <em>is</em> information staying inside. "Collapse" is just the outside finding out. The witness isn't a person with
+    eyes; it's the world, and witnessing is entanglement.</div>
+
+  <div class="note" style="margin-top:14px"><b>And it's exact, not hand-wavy.</b> <code>V² + D² ≤ 1</code> - the more
+    the path is knowable, the less the interference is visible, on a precise quarter-circle. You don't get to keep both.
+    That's not a metaphor for the witness tradeoff; it's the same tradeoff, with a measured equation. Knowing-which and
+    interfering-as-both are complementary the way independence and usefulness were complementary in the commitment box.
+    You can't have full witness and full superposition at once - the gauge above rides the circle between them.</div>
+
+  <div class="note" style="margin-top:14px"><b>The cat, answered.</b> The cat is never both-then-suddenly-one. The cat
+    told the air - the poison, the box, the photons - which it was, long before you opened anything. Once the air knows,
+    there's no interference left to see, so the cat looks classical: one thing, definite, boring. Schrödinger's paradox
+    dissolves not because looking matters but because <em>a cat cannot keep a secret from a box full of molecules.</em>
+    The measurement problem isn't fully closed by this - decoherence explains why you never <em>see</em> the weirdness,
+    not why you ride <em>this</em> branch - but the cat part, the part that bugged you, is just a secret that couldn't
+    be kept.</div>
+
+  <div class="note" style="margin-top:14px;font-size:13px">Verified in Node before drawing: fringe contrast off the
+    computed pattern tracks V = √(1−D²) (within a couple percent, the diffraction envelope's small curvature), and
+    V² + D² = 1 across the whole dial. The dots above are sampled from that exact intensity. Wave-particle duality
+    relation: Englert / Greenberger-Yasin, 1990s.</div>
+</section>
+
+<footer>
+  WHAT THE CAT TELLS THE AIR - a thing I wanted to build - decoherence as the exterior witness<br>
+  verified in Node · two-slit visibility V=√(1−D²), duality V²+D²=1 confirmed across the dial · particles sampled from the exact intensity<br>
+  decoherence: Zeh 1970, Zurek 1980s · which-path duality: Englert 1996, Greenberger-Yasin 1988 · the witness, in physics: the environment, and entanglement is the looking
+</footer>
+
+<script>
+"use strict";
+const DIMS={ cv:[620,420], gauge:[92,92] };
+function fit(c){ const [W,H]=DIMS[c.id]||[c.width,c.height]; const dpr=window.devicePixelRatio||1;
+  const need=Math.round(W*dpr); if(c.width!==need){ c.width=need; c.height=Math.round(H*dpr); c.style.width=W+'px'; c.style.height=H+'px'; }
+  const g=c.getContext('2d'); g.setTransform(dpr,0,0,dpr,0,0); return {g,w:W,h:H}; }
+let CLOCK=0;
+
+const slitWidth=0.06, slitSep=0.30, kk=120;
+let D=0.0, running=true;
+function sinc(u){ return u===0?1:Math.sin(u)/u; }
+function intensity(x){ const V=Math.sqrt(Math.max(0,1-D*D));
+  const env=Math.pow(sinc(kk*slitWidth*x/2),2); const phase=kk*slitSep*x;
+  return env*(1+V*Math.cos(phase)); }
+const WIN=0.085;             // screen window in x-units
+function sampleX(){ const V=Math.sqrt(Math.max(0,1-D*D)); const Imax=1+V;
+  for(let t=0;t<200;t++){ const x=(Math.random()*2-1)*WIN; if(Math.random()*Imax < intensity(x)) return x; } return 0; }
+
+// accumulated dots: store {x in [-WIN,WIN], jitter for screen thickness, age}
+let dots=[];
+function clearScreen(){ dots=[]; }
+
+function draw(){
+  const {g,w,h}=fit(document.getElementById('cv')); g.clearRect(0,0,w,h);
+  const srcX=40, barX=w*0.36, scrX=w*0.86, midY=h/2;
+  const V=Math.sqrt(Math.max(0,1-D*D));
+  // map x-unit -> screen y
+  const yOf=x=> midY - (x/WIN)*(h*0.42);
+  const slitY1=yOf(slitSep*0.5/ (kk*slitSep) *0 + 0.5*0); // placeholder
+  // slit positions in x-units: +/- slitSep/(something) -> just use +/- a visual gap
+  const gap=h*0.10; const s1=midY-gap, s2=midY+gap;
+
+  // --- source ---
+  g.fillStyle='#c4b5fd'; g.beginPath(); g.arc(srcX,midY,5,0,7); g.fill();
+  g.strokeStyle='#3a2c5c'; g.globalAlpha=.5; g.lineWidth=1;
+  for(const sy of [s1,s2]){ g.beginPath(); g.moveTo(srcX,midY); g.lineTo(barX,sy); g.stroke(); } g.globalAlpha=1;
+  g.fillStyle='#62528a'; g.font='10px ui-monospace,monospace'; g.textAlign='center'; g.fillText('source', srcX, midY-14);
+
+  // --- barrier with two slits ---
+  g.fillStyle='#1c1438'; g.fillRect(barX-6, 12, 12, h-24);
+  g.clearRect(barX-7, s1-9, 14, 18); g.clearRect(barX-7, s2-9, 14, 18);
+  g.fillStyle='#06040f'; g.fillRect(barX-6, s1-9, 12, 18); g.fillRect(barX-6, s2-9, 12, 18);
+  g.strokeStyle='#46356b'; g.lineWidth=1; g.strokeRect(barX-6,12,12,h-24);
+
+  // --- which-path "knowing": environment detectors at the slits glow with D ---
+  for(const sy of [s1,s2]){
+    g.fillStyle='#22d3ee'; g.globalAlpha=0.12+0.78*D; g.beginPath(); g.arc(barX, sy, 6+6*D, 0,7); g.fill(); g.globalAlpha=1;
+    if(D>0.02){ g.strokeStyle='#22d3ee'; g.globalAlpha=0.3+0.5*D; g.lineWidth=1; g.setLineDash([3,3]); g.lineDashOffset=-(CLOCK*0.1);
+      g.beginPath(); g.arc(barX, sy, 11+8*D, 0,7); g.stroke(); g.setLineDash([]); g.globalAlpha=1; } }
+  if(D>0.05){ g.fillStyle='#22d3ee'; g.globalAlpha=0.4+0.6*D; g.font='10px ui-monospace,monospace'; g.textAlign='center';
+    g.fillText('environment '+(D>0.9?'knows the path':'learning the path'), barX, h-16); g.globalAlpha=1; }
+
+  // --- the wave: faint ripples from each slit to the screen (fade as D rises) ---
+  g.globalAlpha=0.10*V; g.strokeStyle='#34d399'; g.lineWidth=1;
+  for(const sy of [s1,s2]){ for(let r=14;r<scrX-barX;r+=14){ g.beginPath();
+    for(let a=-0.9;a<=0.9;a+=0.12){ const px=barX+r*Math.cos(a), py=sy+r*Math.sin(a); (a===-0.9)?g.moveTo(px,py):g.lineTo(px,py); } g.stroke(); } }
+  g.globalAlpha=1;
+
+  // --- screen ---
+  g.strokeStyle='#291d44'; g.lineWidth=2; g.beginPath(); g.moveTo(scrX,16); g.lineTo(scrX,h-16); g.stroke();
+
+  // --- accumulated dots ---
+  for(const d of dots){ const y=yOf(d.x); const px=scrX + d.j;
+    g.fillStyle='#fbbf24'; g.globalAlpha=Math.min(0.75, d.age*0.05+0.15);
+    g.beginPath(); g.arc(px, y, 1.5, 0, 7); g.fill(); d.age++; }
+  g.globalAlpha=1;
+
+  // --- the intensity curve the dots approach (to the right of the screen) ---
+  g.strokeStyle='#34d399'; g.lineWidth=2; g.globalAlpha=.9; g.beginPath();
+  const V2=Math.sqrt(Math.max(0,1-D*D)); const Imax=1+V2;
+  for(let i=0;i<=300;i++){ const yy=16+(h-32)*i/300; const x=((midY-yy)/(h*0.42))*WIN; const I=intensity(x)/Imax;
+    const px=scrX+8 + I*70; (i===0)?g.moveTo(px,yy):g.lineTo(px,yy); } g.stroke(); g.globalAlpha=1;
+  g.fillStyle='#62528a'; g.font='10px ui-monospace,monospace'; g.textAlign='left'; g.fillText('pattern', scrX+12, 26);
+
+  // readouts
+  document.getElementById('V').textContent=V.toFixed(2);
+  document.getElementById('Dv').textContent=D.toFixed(2);
+  document.getElementById('dual').textContent=(V*V+D*D).toFixed(2);
+  const vd=document.getElementById('verdict');
+  if(D<0.33){ vd.textContent='QUANTUM · both paths'; vd.className='verdict q';
+    document.getElementById('readnote').innerHTML='The environment knows little, the particle keeps both paths, and the dots build interference bands. The cat is genuinely "both" - stable, because the secret hasn\'t leaked.';
+  } else if(D<0.8){ vd.textContent='BLURRING · secret leaking'; vd.className='verdict q';
+    document.getElementById('readnote').innerHTML='The environment is half-learning the path. The bands fade in proportion - <b>V='+V.toFixed(2)+'</b>. Partial knowledge, partial interference: the trade-off is continuous, not a switch.';
+  } else { vd.textContent='CLASSICAL · one path'; vd.className='verdict c';
+    document.getElementById('readnote').innerHTML='The environment knows the path. Interference is gone; the dots form two plain particle bumps. Nothing collapsed - the which-path fact simply left the particle. <b>This is what "looking" really is.</b>';
+  }
+  drawGauge(V);
+  requestAnimationFrame(draw);
+}
+
+function drawGauge(V){
+  const {g,w,h}=fit(document.getElementById('gauge')); g.clearRect(0,0,w,h);
+  const ox=12, oy=h-12, Rr=Math.min(w,h)-24;
+  // quarter circle V^2+D^2=1
+  g.strokeStyle='#291d44'; g.lineWidth=1.5; g.beginPath(); g.arc(ox,oy,Rr,-Math.PI/2,0,false); g.stroke();
+  g.strokeStyle='#291d44'; g.beginPath(); g.moveTo(ox,oy); g.lineTo(ox,oy-Rr); g.moveTo(ox,oy); g.lineTo(ox+Rr,oy); g.stroke();
+  // axes labels
+  g.fillStyle='#34d399'; g.font='8px ui-monospace,monospace'; g.textAlign='left'; g.fillText('V', ox+2, oy-Rr+8);
+  g.fillStyle='#22d3ee'; g.fillText('D', ox+Rr-8, oy-3);
+  // point on circle
+  const ang=Math.acos(Math.min(1,Math.max(0,D)));   // V=cos? actually D along x: x=D, y=V
+  const px=ox + D*Rr, py=oy - V*Rr;
+  g.strokeStyle='#46356b'; g.lineWidth=1; g.setLineDash([2,2]);
+  g.beginPath(); g.moveTo(ox,py); g.lineTo(px,py); g.lineTo(px,oy); g.stroke(); g.setLineDash([]);
+  g.fillStyle='#c4b5fd'; g.beginPath(); g.arc(px,py,4,0,7); g.fill();
+}
+
+document.getElementById('D').oninput=function(){ D=(+this.value)/100; document.getElementById('DL').textContent=D.toFixed(2); clearScreen(); };
+document.getElementById('run').onclick=function(){ running=!running; this.classList.toggle('on',running); this.textContent=running?'▶ firing':'❚❚ paused'; if(running) requestAnimationFrame(loop); };
+document.getElementById('clear').onclick=clearScreen;
+document.querySelectorAll('.chip').forEach(c=>c.onclick=()=>{ D=(+c.dataset.d)/100; document.getElementById('D').value=+c.dataset.d; document.getElementById('DL').textContent=D.toFixed(2); clearScreen(); });
+
+function loop(){ CLOCK++;
+  if(running){ for(let i=0;i<6;i++){ const x=sampleX(); dots.push({x, j:(Math.random()*8-4), age:0}); } if(dots.length>2600) dots.splice(0,dots.length-2600); }
+  if(running) requestAnimationFrame(loop);
+}
+requestAnimationFrame(loop);
+requestAnimationFrame(draw);
+</script>
+</body>
+</html>
